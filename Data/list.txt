@@ -1,0 +1,3 @@
+C:\Users\Meir\PycharmProjects\YoloToTfRecords\Data\img\ccd (1).jpg
+C:\Users\Meir\PycharmProjects\YoloToTfRecords\Data\img\ccd (2).jpg
+C:\Users\Meir\PycharmProjects\YoloToTfRecords\Data\img\ccd (3).jpg

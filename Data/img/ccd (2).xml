@@ -1,0 +1,26 @@
+<annotation>
+    <folder>CCD</folder>
+    <filename>ccd (2).jpg</filename>
+    <path>C:\Yolo\DataSets\3classes\Marana\CCD\ccd (2).jpg</path>
+    <source>
+        <database>Unknown</database>
+    </source>
+    <size>
+        <width>404</width>
+        <height>399</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>vehicle</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>1</difficult>
+        <bndbox>
+            <xmin>65</xmin>
+            <ymin>159</ymin>
+            <xmax>167</xmax>
+            <ymax>205</ymax>
+        </bndbox>
+    </object>
+</annotation>

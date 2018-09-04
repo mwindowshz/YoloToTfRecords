@@ -1,0 +1,136 @@
+<annotation>
+    <folder>CCD</folder>
+    <filename>ccd (1).jpg</filename>
+    <path>C:\Yolo\DataSets\3classes\Marana\CCD\ccd (1).jpg</path>
+    <source>
+        <database>Unknown</database>
+    </source>
+    <size>
+        <width>414</width>
+        <height>410</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    <object>
+        <name>person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>1</difficult>
+        <bndbox>
+            <xmin>297</xmin>
+            <ymin>184</ymin>
+            <xmax>333</xmax>
+            <ymax>324</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>1</difficult>
+        <bndbox>
+            <xmin>236</xmin>
+            <ymin>180</ymin>
+            <xmax>286</xmax>
+            <ymax>349</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>1</difficult>
+        <bndbox>
+            <xmin>198</xmin>
+            <ymin>195</ymin>
+            <xmax>239</xmax>
+            <ymax>315</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>1</difficult>
+        <bndbox>
+            <xmin>129</xmin>
+            <ymin>190</ymin>
+            <xmax>184</xmax>
+            <ymax>357</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>vehicle</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>1</difficult>
+        <bndbox>
+            <xmin>167</xmin>
+            <ymin>119</ymin>
+            <xmax>312</xmax>
+            <ymax>210</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>vehicle</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>1</difficult>
+        <bndbox>
+            <xmin>318</xmin>
+            <ymin>127</ymin>
+            <xmax>413</xmax>
+            <ymax>227</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>vehicle</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>1</difficult>
+        <bndbox>
+            <xmin>217</xmin>
+            <ymin>103</ymin>
+            <xmax>342</xmax>
+            <ymax>162</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>vehicle</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>1</difficult>
+        <bndbox>
+            <xmin>4</xmin>
+            <ymin>61</ymin>
+            <xmax>87</xmax>
+            <ymax>121</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>vehicle</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>1</difficult>
+        <bndbox>
+            <xmin>0</xmin>
+            <ymin>114</ymin>
+            <xmax>86</xmax>
+            <ymax>189</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>1</difficult>
+        <bndbox>
+            <xmin>71</xmin>
+            <ymin>139</ymin>
+            <xmax>95</xmax>
+            <ymax>189</ymax>
+        </bndbox>
+    </object>    <object>
+        <name>person</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>1</difficult>
+        <bndbox>
+            <xmin>37</xmin>
+            <ymin>130</ymin>
+            <xmax>60</xmax>
+            <ymax>186</ymax>
+        </bndbox>
+    </object>
+</annotation>
