@@ -11,7 +11,7 @@ Steps to create TFREcords
    source_file_list = "C:\\Yolo\\DataSets\\3classes\\ir_train.txt"
   dest_csv_file = 'C:\\Yolo\\DataSets\\3classes\\CSV_list_File\\ir_train.csv'
   
-  with input list of jpg files with full path, output name of csv file.
+  with input list of jpg files with full path (next to each jpg file should be the xml boxes file), output name of csv file.
 3. Create TFrecords from CSV file:
   After created csv file, run the following:
   python generate_tfrecord.py --csv_input=data/train_labels.csv  --output_path=train.record
