@@ -52,8 +52,8 @@ def xml_to_csv_from_list(images_list_file_name):
     return xml_df
 
 def main():
-  source_file_list = "C:\\Yolo\\DataSets\\3classes\\Marana\\ir_train.txt"
-  dest_csv_file = 'C:\\Yolo\\DataSets\\3classes\\Marana\\CSV_list_File\\ir_train.csv'
+  source_file_list = "C:\\Yolo\\DataSets\\3classes\\\ir_train.txt"  # CHANGE PATH TO YOUR FILE - LIST of jpg files with xml file next to them in the same directory
+  dest_csv_file = 'C:\\Yolo\\DataSets\\3classes\\CSV_list_File\\ir_train.csv'  # CHANGE PATH TO YOUR FILE
   df = xml_to_csv_from_list(source_file_list)
   df.to_csv(dest_csv_file,index=None)
   # image_path = os.path.join(os.getcwd(), 'annotations')
