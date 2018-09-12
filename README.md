@@ -22,3 +22,42 @@ Steps to create TFREcords
   Example of usage:
    python generate_tfrecord.py --csv_input='C:/Yolo/DataSets/3classes/CSV_list_File/ir_train.csv' --output_path = C:/Yolo/DataSets/3classes/train.records
    
+ # 4. use TensorFlow Detection API for training and evaluation 
+ see also https://becominghuman.ai/tensorflow-object-detection-api-tutorial-training-and-evaluating-custom-object-detector-ed2594afcf73
+  ## 4.1 download and install TF Detection API
+  https://github.com/tensorflow/models/tree/master/research/object_detection
+  follow the instructions on readme.md
+  see also tutorial in https://pythonprogramming.net/introduction-use-tensorflow-object-detection-api-tutorial/
+  
+  ## 4.2 choose model to use for transfer learning
+  https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md
+  
+  ## 4.3 
+   edit model config file:
+   See step 3 in https://becominghuman.ai/tensorflow-object-detection-api-tutorial-training-and-evaluating-custom-object-detector-ed2594afcf73
+   
+   set number of classes
+   path for tfrecords train.record. and eval.record
+   
+   then run training Step 4: Evaluating the model
+   python train.py --logtostderr \ 
+       --train_dir=training/ \       
+ --pipeline_config_path=training/ssd_mobilenet_v1_coco.config
+ 
+ 
+ 
+ set PYTHONPATH=%PYTHONPATH%;%cd%;%cd%\slim
+cd C:\Yolo\DataSets\Data_For_TF_Obecect_detection_API\models-master\research\object_detection
+python .\legacy\train.py --logtostderr --train_dir=D:/tf-od-api/first/training/ --pipline_config_path=D:/tf-od-api/first/training/ssd_mobilenet_v1_coco.config
+
+python .\legacy\eval.py    --logtostderr --pipeline_config_path=D:/tf-od-api/first/training/ssd_mobilenet_v1_coco.config   --checkpoint_dir=D:/tf-od-api/first/training/ --eval_dir=D:/tf-od-api/first/eval/
+
+#To visualize the eval results
+tensorboard --logdir=D:/tf-od-api/first/eval/
+
+#TO visualize the training results
+tensorboard --logdir=D:/tf-od-api/first/training/
+ 
+   
+   
+   
