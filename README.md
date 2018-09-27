@@ -57,7 +57,23 @@ tensorboard --logdir=D:/tf-od-api/first/eval/
 
 #TO visualize the training results
 tensorboard --logdir=D:/tf-od-api/first/training/
+ ### Use BatchRunner.py to run set of training and evaluation
+ BatchRunner.py is a script using object detection api
+ prepare a Models folder, and a training/eval folder
  
-   
+ set the following variables:
+   modelBaseDir = 'D:\\tf-od-api\\3classes\\Base_Modeles_Dir'
+  trainBaseDir = 'D:\\tf-od-api\\3classes\\Train_Eval_Base_Dir'
+  trainPyFilePath = '.\\legacy\\train.py'
+  evalPyFilePath = '.\\legacy\\eval.py'
+  
+  after this run the BatchRunner.py file
+  Python BatchRunner.py
+  
+  this would loop over each model prepared in modelBaseDir directory
+  and run training and eval.
+  Set trainBaseDir directory to be used.
+  
+ 
    
    
