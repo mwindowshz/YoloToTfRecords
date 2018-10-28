@@ -42,6 +42,8 @@ Steps to create TFREcords
   pip install matplotlib
   
   Head to the protoc releases page and download the protoc-3.4.0-win32.zip, extract it, and you will find protoc.exe in the bin directory.
+  https://github.com/protocolbuffers/protobuf/releases/download/v3.4.0/protoc-3.4.0-win32.zip
+  
 You can move this to something more appropriate if you like, or leave it here. I eventually put mine in program files, making a "protoc" directory and dropping it in there.
 Now, from within the models (or models-master) directory, you can use the protoc command like so:
 
