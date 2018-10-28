@@ -29,6 +29,27 @@ Steps to create TFREcords
   follow the instructions on readme.md
   see also tutorial in https://pythonprogramming.net/introduction-use-tensorflow-object-detection-api-tutorial/
   
+  steps to install object detection API
+  
+  download git repo
+  install
+  pip install pillow
+  
+  pip install lxml
+  
+  pip install jupyter
+  
+  pip install matplotlib
+  
+  Head to the protoc releases page and download the protoc-3.4.0-win32.zip, extract it, and you will find protoc.exe in the bin directory.
+You can move this to something more appropriate if you like, or leave it here. I eventually put mine in program files, making a "protoc" directory and dropping it in there.
+Now, from within the models (or models-master) directory, you can use the protoc command like so:
+
+"C:/Program Files/protoc/bin/protoc" object_detection/protos/*.proto --python_out=.
+
+#### and very important from research folder call:
+  set PYTHONPATH=%PYTHONPATH%;%cd%;%cd%\slim
+  
   ## 4.2 choose model to use for transfer learning
   https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md
   
