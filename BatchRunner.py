@@ -2,7 +2,7 @@ import os
 import tensorflow as tf
 
 
-def printTrainingLossResults(train_dir):
+def printTrainingLossResults(train_dir,fileToWriteResults):
     finalResults = []
     for file in os.listdir(train_dir):
         if file.startswith("events.out.tfevents"):
@@ -18,8 +18,12 @@ def printTrainingLossResults(train_dir):
                         finalResults.append(value)
                     # print(value)
     print("\n")
-    print(finalResults)
-def printEvalAPResults(eval_dir):
+    # print(finalResults)
+    for item in finalResults:
+        print(item, file=fileToWriteResults, flush=True)
+    fileToWriteResults.flush()
+
+def printEvalAPResults(eval_dir,fileToWriteResults):
     evalValus = []
     for file in os.listdir(eval_dir):
         if file.startswith("events.out.tfevents"):
@@ -31,19 +35,40 @@ def printEvalAPResults(eval_dir):
                 for value in Event.summary.value:
                     if 'PascalBoxes' in value.tag:
                         evalValus.append(value)
+    #write the data to the file
+    for item in evalValus:
+        print(item, file=fileToWriteResults, flush=True)
+    fileToWriteResults.flush()
 
     print(evalValus)
 
 #**************vaiables to set by user:******************
 
 modelBaseDir = 'D:\\tf-od-api\\3classes\\Base_Modeles_Dir'
-trainBaseDir = 'D:\\tf-od-api\\3classes\\Train_Eval_Base_Dir'
+trainBaseDir = 'D:\\tf-od-api\\3classes\\Train_Eval_Base_Dir_200000'
+
+# modelBaseDir = 'D:/tf-od-api/3classes/testBase'
+# trainBaseDir = 'D:\\tf-od-api\\3classes\\test_Train_Eval'
+
 trainPyFilePath = '.\\legacy\\train.py'
 evalPyFilePath = '.\\legacy\\eval.py'
+DO_TRAINING = True
+DO_EVAL = True
+doFullEval = True
+OnlyExtractResults = False # for only extracting results, not doing the acctual eval - used
+if not os.path.exists(trainBaseDir):
+    os.makedirs(trainBaseDir)
+#eval configs are diffrent for each group of images we want to eval,
 
+evalNames = ['pipeline_ir', 'pipeline_ccd', 'pipeline_full', 'pipeline_voc']
+pipelineEvalConfigs = []
 #list of all model directorys
 
 modelsDirList = [f.path for f in os.scandir(modelBaseDir ) if f.is_dir() ]
+#open log file and clear it
+fname = trainBaseDir + "/" + "results.txt"
+fileToWriteResults = open(fname, "w")
+fileToWriteResults.close()
 
 #loop over all models in model list and run train then eval on the training.
 for modelPath in modelsDirList:
@@ -64,19 +89,44 @@ for modelPath in modelsDirList:
 
     trainCommand = 'python ' + trainPyFilePath + ' --logtostderr --train_dir=' + train_dir + ' --pipeline_config_path=' + pipeline_config_path
     print(trainCommand)
+    print('\n')
     evalCommand = 'python ' + evalPyFilePath + ' --logtostderr --pipeline_config_path=' + pipeline_config_path +  ' --checkpoint_dir=' + train_dir + ' --eval_dir=' + eval_dir
     print(evalCommand)
-
-    # printTrainingLossResults(train_dir)
-
-
-    os.system(trainCommand)
-    print('^^^^^ finished training^^^ results are \n')
-    printTrainingLossResults(train_dir)
+    print('\n')
+    print('\n')
+    print('\n')
+    fname = trainBaseDir + "/" + modelName + "results.txt"
+    fileToWriteResults = open(fname, "a+")
+    if DO_TRAINING:
+        '''RUN TRAINING ON EACH MODEL'''
+        fileToWriteResults.write(trainCommand)
+        os.system(trainCommand)
+        print('^^^^^ finished training^^^ results are \n')
+        printTrainingLossResults(train_dir,fileToWriteResults)
     #add time mesurments to know how long this took
-    os.system(evalCommand)
-    print('^^^ finished eval ^^^')
-    printEvalAPResults(eval_dir)
+    if DO_EVAL:
+        if doFullEval:
+            #create eval command and run it
+            for name in evalNames:
+                path, ending = pipeline_config_path.split('pipeline')
+                tempEvalConfig = path + name + ending
+                curr_eval_dir = eval_dir+name
+                if not os.path.exists(curr_eval_dir):
+                    os.makedirs(curr_eval_dir)
+                evalCommand = 'python ' + evalPyFilePath + ' --logtostderr --pipeline_config_path=' + tempEvalConfig + ' --checkpoint_dir=' + train_dir + ' --eval_dir=' + curr_eval_dir
+                print(evalCommand)
+                fileToWriteResults.write('\n{}\n {}'.format(name,evalCommand))
+                if not OnlyExtractResults:
+                    os.system(evalCommand)
+                    print('finished Eval {}'.format(name))
+                printEvalAPResults(curr_eval_dir, fileToWriteResults)
+        else:
+            fileToWriteResults.write(evalCommand)
+            os.system(evalCommand)
+            print('^^^ finished eval ^^^')
+            printEvalAPResults(eval_dir,fileToWriteResults)
+    #
+    fileToWriteResults.close()
 
 # os.system('python .\\legacy\\train.py --logtostderr --train_dir=D:/tf-od-api/3classes/3/traindir --pipeline_config_path=D:/tf-od-api/3classes/3/ssd_mobilenet_v1_coco_11_06_2017/pipeline.config')
 # print("Finished training")
@@ -116,3 +166,4 @@ for modelPath in modelsDirList:
 # print(evalValus)
 # # a = tf.train.summary_iterator('D:/tf-od-api/3classes/3/eval')
 #
+
