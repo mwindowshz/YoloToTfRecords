@@ -1,6 +1,6 @@
 import os
 import tensorflow as tf
-
+import pandas as pd
 
 def printTrainingLossResults(train_dir,fileToWriteResults):
     finalResults = []
@@ -36,14 +36,17 @@ def printEvalAPResults(eval_dir,fileToWriteResults):
                     if 'PascalBoxes' in value.tag:
                         evalValus.append(value)
     #write the data to the file
+    retValues = []
     for item in evalValus:
         print(item, file=fileToWriteResults, flush=True)
+        retValues.append(item.simple_value)
     fileToWriteResults.flush()
 
     print(evalValus)
+    return retValues
 
 #**************vaiables to set by user:******************
-
+#
 modelBaseDir = 'D:\\tf-od-api\\3classes\\Base_Modeles_Dir'
 trainBaseDir = 'D:\\tf-od-api\\3classes\\Train_Eval_Base_Dir_200000'
 
@@ -52,10 +55,19 @@ trainBaseDir = 'D:\\tf-od-api\\3classes\\Train_Eval_Base_Dir_200000'
 
 trainPyFilePath = '.\\legacy\\train.py'
 evalPyFilePath = '.\\legacy\\eval.py'
-DO_TRAINING = True
+DO_TRAINING = False
 DO_EVAL = True
 doFullEval = True
-OnlyExtractResults = False # for only extracting results, not doing the acctual eval - used
+OnlyExtractResults = True # for only extracting results, not doing the acctual eval - used
+#**************END vaiables to set by user:******************
+
+#eval result index
+index = ['PascalBoxes_Precision/mAP@0.5IOU/animal',
+         'PascalBoxes_Precision/mAP@0.5IOU/person',
+         'PascalBoxes_Precision/mAP@0.5IOU/vehicle',
+         'PascalBoxes_Precision/mAP@0.5IOU']
+
+
 if not os.path.exists(trainBaseDir):
     os.makedirs(trainBaseDir)
 #eval configs are diffrent for each group of images we want to eval,
@@ -106,7 +118,9 @@ for modelPath in modelsDirList:
     #add time mesurments to know how long this took
     if DO_EVAL:
         if doFullEval:
-            #create eval command and run it
+            #create dataframe for csv results output
+            df = pd.DataFrame(index=index)
+            # create eval command and run it
             for name in evalNames:
                 path, ending = pipeline_config_path.split('pipeline')
                 tempEvalConfig = path + name + ending
@@ -119,7 +133,13 @@ for modelPath in modelsDirList:
                 if not OnlyExtractResults:
                     os.system(evalCommand)
                     print('finished Eval {}'.format(name))
-                printEvalAPResults(curr_eval_dir, fileToWriteResults)
+                evalValues = printEvalAPResults(curr_eval_dir, fileToWriteResults)
+                if len(evalValues) > 0:
+                    df[name] = pd.Series(index=index, data=evalValues)
+
+            csv_file_name = trainBaseDir + "/" + modelName + "results.csv"
+            df.to_csv(csv_file_name)
+
         else:
             fileToWriteResults.write(evalCommand)
             os.system(evalCommand)
@@ -166,4 +186,20 @@ for modelPath in modelsDirList:
 # print(evalValus)
 # # a = tf.train.summary_iterator('D:/tf-od-api/3classes/3/eval')
 #
-
+# index = ['PascalBoxes_Precision/mAP@0.5IOU',
+#          'PascalBoxes_Precision/mAP@0.5IOU/animal',
+#          'PascalBoxes_Precision/mAP@0.5IOU/person',
+#          'PascalBoxes_Precision/mAP@0.5IOU/vehicle']
+#
+# trainBaseDir = 'c:/temp'
+# modelName = 'ssd_v1'
+#
+# if True:
+#     df = pd.DataFrame(index = index,columns=[modelName])
+#     df[modelName] = pd.Series(index=index,data=evalValues)
+#     print(df)
+#     print('loop another model\n')
+#     modelName = 'ssd_v2'
+#     evalValues = [0.02,0.5,0.6,0.01]
+#     df[modelName] = pd.Series(index=index,data=evalValues)
+#     print(df)
