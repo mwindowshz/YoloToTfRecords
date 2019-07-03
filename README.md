@@ -6,12 +6,35 @@ in DATA folder are examples of YOLO txt boxes format, and PASCAL VOC xml format.
 
 Steps to create TFREcords
 1. convert YOLO txt to PASCAL VOC xml format using provided tools
+
+  1.1 Enter PascalVocWriter Folder
+
+  1.2 open __init__.py, on the end you would find the code, to set calss names, pas a list of all jpg images wich hava a txt with YOLO Marks format file next to them
+
+    
+    > classes = ['background',
+                'person', 'animal','vehicle']
+    
+    > trainFiles = "D:\\YOLO\\img-s11\\img-s1\\img\\all.txt"
+    
+    > parse_yolo_labels(images_list_file_name=trainFiles,classes=classes)
+    
+ run code the result should be an additional xml file for each image
+
+
 2. Create CSV list file using xml_to_csv 
   fill in 
    source_file_list = "C:\\Yolo\\DataSets\\3classes\\ir_train.txt"
   dest_csv_file = 'C:\\Yolo\\DataSets\\3classes\\CSV_list_File\\ir_train.csv'
   
   with input list of jpg files with full path (next to each jpg file should be the xml boxes file), output name of csv file.
+  
+  
+      ### CSV File Format
+     > filename,width,height,class,xmin,ymin,xmax,ymax
+
+    > D:\YOLO\img-s11\img-s1\Images\voc\2007\1\000001.jpg,353,500,animal,48,240,195,371
+
 3. Create TFrecords from CSV file:
   After created csv file, run the following:
   python generate_tfrecord.py --csv_input=data/train_labels.csv  --output_path=train.record
